@@ -16,13 +16,13 @@
             <form method="POST" action="{{ url_for('update') }}">
                 <input type="text" name="oldtitle" id="" value="{{book.title}}" hidden>
                 <input type="text" name="newtitle" value="{{book.title}}">
-                <input type="submit" value="Atualizar">
+                <button type="submit" class="emoji-btn" aria-label="Atualizar título" value="Atualizar" title="Atualizar">✏️</button>
             </form>
         </td>
         <td>
             <form method="POST" action="{{ url_for('delete') }}">
                 <input type="hidden" value="{{ book.title }}" name="title">
-                <input type="submit" value="Delete">
+                <button type="submit" class="emoji-btn" aria-label="Deletar título" value="Atualizar" title="Deletar">🗑️</button>
             </form>
         </td>
     </tr>
