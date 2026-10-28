@@ -43,23 +43,26 @@ def home():
 @app.route("/update", methods=["POST"])
 def update():
     try:
-        title = request.form.get("title")
+        newtitle = request.form.get('newtitle')
+        oldtitle = request.form.get('oldtitle')
 
-        if not title:
-            raise Exception("O título não pode ser vazio")
+        if not newtitle or not newtitle.strip():
+            raise Exception('Escreva um novo título')
 
-        newtitle = request.form.get("newtitle")
-        oldtitle = request.form.get("oldtitle")
-        #a linha a seguir busca o dado antigo
         book = Book.query.filter_by(title=oldtitle).first()
-        # a linha a seguir faz o update
-        book.title = newtitle
+
+        if not book:
+            raise Exception('Livro não encontrado')
+
+        book.title = newtitle.strip()
         db.session.commit()
+
     except Exception as e:
         db.session.rollback()
-        print("Não foi possível atualizar o título desse livro")
         print(e)
-    return redirect(url_for("home"))
+
+    return redirect(url_for('home'))
+
 
 
 @app.route("/delete", methods=["POST"])
