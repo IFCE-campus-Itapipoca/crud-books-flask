@@ -17,11 +17,19 @@ class Book(db.Model):
     def __repr__(self):
         return "<Title: {}>".format(self.title)
 
+
+
+
 @app.route("/", methods=['GET','POST'])
 def home():
     # a linha a seguir verifica se o formulário não está vazio
     if request.form :
         try:
+            title = request.form.get("title")
+
+            if not title:
+                raise Exception("O título não pode ser vazio")
+
             book = Book(title=request.form.get("title"))
             db.session.add(book)
             db.session.commit()
@@ -35,6 +43,11 @@ def home():
 @app.route("/update", methods=["POST"])
 def update():
     try:
+        title = request.form.get("title")
+
+        if not title:
+            raise Exception("O título não pode ser vazio")
+
         newtitle = request.form.get("newtitle")
         oldtitle = request.form.get("oldtitle")
         #a linha a seguir busca o dado antigo
