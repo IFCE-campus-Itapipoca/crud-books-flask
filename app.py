@@ -21,21 +21,31 @@ class Book(db.Model):
 def home():
     # a linha a seguir verifica se o formulário não está vazio
     if request.form :
-        book = Book(title=request.form.get("title"))
-        db.session.add(book)
-        db.session.commit()
+        try:
+            book = Book(title=request.form.get("title"))
+            db.session.add(book)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            print("Houve uma falha na inserção desse livro.")
+            print(e)
     books = Book.query.all()
     return render_template("home.html", books=books)
 
 @app.route("/update", methods=["POST"])
 def update():
-    newtitle = request.form.get("newtitle")
-    oldtitle = request.form.get("oldtitle")
-    #a linha a seguir busca o dado antigo
-    book = Book.query.filter_by(title=oldtitle).first()
-    # a linha a seguir faz o update
-    book.title = newtitle
-    db.session.commit()
+    try:
+        newtitle = request.form.get("newtitle")
+        oldtitle = request.form.get("oldtitle")
+        #a linha a seguir busca o dado antigo
+        book = Book.query.filter_by(title=oldtitle).first()
+        # a linha a seguir faz o update
+        book.title = newtitle
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        print("Não foi possível atualizar o título desse livro")
+        print(e)
     return redirect(url_for("home"))
 
 
