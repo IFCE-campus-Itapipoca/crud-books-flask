@@ -17,9 +17,6 @@ class Book(db.Model):
     def __repr__(self):
         return "<Title: {}>".format(self.title)
 
-
-
-
 @app.route("/", methods=['GET','POST'])
 def home():
     # a linha a seguir verifica se o formulário não está vazio
