@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" action="/">
+    <input type="text" name="title" placeholder="Título do livro">
+    <button type="submit">Adicionar</button>
+</form>
+
+<h1>Livros</h1>
+<table>
+{% for book in books %}
+    <tr>
+        <td>{{book.title}}</td>
+        <!-- envia os dados do formulário para a rota update -->
+        <td>
+            <form method="POST" action="{{ url_for('update') }}">
+                <input type="text" name="oldtitle" id="" value="{{book.title}}" hidden>
+                <input type="text" name="newtitle" value="{{book.title}}">
+                <input type="submit" value="Atualizar">
+            </form>
+        </td>
+        <td>
+            <form method="POST" action="{{ url_for('delete') }}">
+                <input type="hidden" value="{{ book.title }}" name="title">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
