@@ -20,8 +20,19 @@
         <span class="titulo">{{ book.title }}</span>
 
         <form method="POST" action="{{ url_for('update') }}">
-            <input type="hidden" name="oldtitle" value="{{ book.title }}">
-            <input type="text" name="newtitle" placeholder="{{ book.title }}" required >
+            <input
+                type="hidden"
+                name="oldtitle"
+                value="{{ book.title }}"
+            >
+
+            <input
+    type="text"
+    name="newtitle"
+    placeholder="{{ book.title }}"
+    required
+>
+
             <button type="submit" class="emoji-btn" title="Atualizar">
                 ✏️
             </button>
@@ -29,6 +40,7 @@
 
         <form method="POST" action="{{ url_for('delete') }}">
             <input type="hidden" name="title" value="{{ book.title }}">
+
             <button type="submit" class="emoji-btn" title="Excluir">
                 🗑️
             </button>
